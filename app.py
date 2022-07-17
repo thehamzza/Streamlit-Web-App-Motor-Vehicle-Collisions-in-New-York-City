@@ -7,11 +7,11 @@ import pymongo
 
 # Initialize connection.
 # Uses st.experimental_singleton to only run once.
-@st.experimental_singleton(suppress_st_warning=True)
-def init_connection():
-    return pymongo.MongoClient(**st.secrets["mongo"], connect=False)
+# @st.experimental_singleton(suppress_st_warning=True)
+# def init_connection():
+#     return pymongo.MongoClient(**st.secrets["mongo"], connect=False)
 
-client = init_connection()
+# client = init_connection()
 
 # Pull data from the collection.
 # Uses st.experimental_memo to only rerun when the query changes or after 10 min.
@@ -34,23 +34,44 @@ st.markdown("This application is a Streamlit dashboard that can be used to analy
 
 # Pull data from the collection.
 # Uses st.experimental_memo to only rerun when the query changes or after 10 min.
-@st.experimental_memo(ttl=600)
-#@st.cache(persist=True)
-def load_data(nrows):
-    db = client.mydb
-    items = db.mycollection.find()
-    items = list(items)  # make hashable for st.experimental_memo
+# @st.experimental_memo(ttl=600)
+##@st.cache(persist=True)
+# def load_data(nrows):
+#     db = client.mydb
+#     items = db.mycollection.find()
+#     items = list(items)  # make hashable for st.experimental_memo
 
-    #data = pd.read_csv(DATA_URL, nrows=nrows, parse_dates=[['CRASH_DATE', 'CRASH_TIME']])
-    data = pd.DataFrame(items, nrows=nrows, parse_dates=[['CRASH_DATE', 'CRASH_TIME']])
-    data.dropna(subset=['LATITUDE', 'LONGITUDE'], inplace=True)
-    lowercase= lambda x: str(x).lower()
-    data.rename(lowercase, axis='columns', inplace=True)
-    data.rename(columns={'crash_date_crash_time':'date/time'}, inplace=True)
-    return data
+#     #data = pd.read_csv(DATA_URL, nrows=nrows, parse_dates=[['CRASH_DATE', 'CRASH_TIME']])
+#     data = pd.DataFrame(items, nrows=nrows, parse_dates=[['CRASH_DATE', 'CRASH_TIME']])
+#     data.dropna(subset=['LATITUDE', 'LONGITUDE'], inplace=True)
+#     lowercase= lambda x: str(x).lower()
+#     data.rename(lowercase, axis='columns', inplace=True)
+#     data.rename(columns={'crash_date_crash_time':'date/time'}, inplace=True)
+#     return data
 
-data = load_data(100000)
+def get_database():
+    from pymongo import MongoClient
+    import pymongo
 
+    # Provide the mongodb atlas url to connect python to mongodb using pymongo
+    CONNECTION_STRING = "mongodb+srv://<username>:<password>@<cluster0>.mongodb.net/motor_vehicle_crash_nyc.motor_vehicle_crash_data"
+
+    # Create a connection using MongoClient. You can import MongoClient or use pymongo.MongoClient
+    client = MongoClient(CONNECTION_STRING)
+
+    # Create the database for our example (we will use the same database throughout the tutorial
+    return client
+
+data = get_database()
+
+#data = load_data(100000)
+#data = get_data
+data = pd.DataFrame(data, nrows=nrows, parse_dates=[['CRASH_DATE', 'CRASH_TIME']])
+data.dropna(subset=['LATITUDE', 'LONGITUDE'], inplace=True)
+lowercase= lambda x: str(x).lower()
+data.rename(lowercase, axis='columns', inplace=True)
+data.rename(columns={'crash_date_crash_time':'date/time'}, inplace=True)
+return data
 
 st.header("Where are the most people injured in NYC")
 injured_people = st.slider("Number of persons injured in vehicle collision", 0, 19)
