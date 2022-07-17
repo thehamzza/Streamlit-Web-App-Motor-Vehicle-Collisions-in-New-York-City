@@ -6,7 +6,7 @@ import plotly.express as px
 import requests
 import io
 
-DATA_URL = "https://github.com/thehamzza/Streamlit-Web-App-Motor-Vehicle-Collisions-in-New-York-City/blob/main/Motor_Vehicle_Collisions_Crashes.csv"
+DATA_URL = "https://github.com/thehamzza/Streamlit-Web-App-Motor-Vehicle-Collisions-in-New-York-City/blob/77f82403f9a58fc252a984cc8272730dcdc46af8/Motor_Vehicle_Collisions_Crashes.csv"
 download = requests.get(DATA_URL).content
 #df = pd.read_csv(io.StringIO(download.decode('utf-8')))
 
