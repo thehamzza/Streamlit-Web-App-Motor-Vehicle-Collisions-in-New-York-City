@@ -11,7 +11,7 @@ DATA_URL = "Motor_Vehicle_Collisions_Crashes.csv"
 #DATA_URL = ("https://github.com/thehamzza/Streamlit-Web-App-Motor-Vehicle-Collisions-in-New-York-City/blob/77f82403f9a58fc252a984cc8272730dcdc46af8/Motor_Vehicle_Collisions_Crashes.csv")
 
 
-st.title("Motor Vehicle Collisions in NYC 🗽🚕💥")
+st.title("Motor Vehicle Collisions in NYC 🚕💥")
 st.markdown("This application is a Streamlit dashboard that can be used to analyze motor vehicle collisions in New York City")
 
 image = Image.open('nyc_accident_image.jpg')
