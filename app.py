@@ -5,11 +5,6 @@ import pydeck as pdk
 import plotly.express as px
 from PIL import Image
 
-image = Image.open('nyc_accident_image.jpg')
-st.image(image, caption='Analysis of Accidents in NYC')
-
-
-
 
 DATA_URL = "Motor_Vehicle_Collisions_Crashes.csv"
 #DATA_URL = "https://github.com/thehamzza/Streamlit-Web-App-Motor-Vehicle-Collisions-in-New-York-City/blob/main/Motor_Vehicle_Collisions_Crashes.csv"
@@ -18,6 +13,10 @@ DATA_URL = "Motor_Vehicle_Collisions_Crashes.csv"
 
 st.title("Motor Vehicle Collisions in New York City")
 st.markdown("This application is a Streamlit dashboard that can be used to analyze motor vehicle collisions in NYC 🗽🚕💥")
+
+image = Image.open('nyc_accident_image.jpg')
+st.image(image, caption='Analysis of Accidents in NYC')
+
 
 # Pull data from the collection.
 # Uses st.experimental_memo to only rerun when the query changes or after 10 min.
