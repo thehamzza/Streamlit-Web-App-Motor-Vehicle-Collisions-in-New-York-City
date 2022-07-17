@@ -7,7 +7,7 @@ import plotly.express as px
 
 
 
-DATA_URL = "G:/WORK/GRAY_SOLUTIONS_PROJECTS/Sreamlit_Project/Motor_Vehicle_Collisions_Crashes.csv"
+DATA_URL = "Motor_Vehicle_Collisions_Crashes.csv"
 #DATA_URL = "https://github.com/thehamzza/Streamlit-Web-App-Motor-Vehicle-Collisions-in-New-York-City/blob/main/Motor_Vehicle_Collisions_Crashes.csv"
 #DATA_URL = ("https://github.com/thehamzza/Streamlit-Web-App-Motor-Vehicle-Collisions-in-New-York-City/blob/77f82403f9a58fc252a984cc8272730dcdc46af8/Motor_Vehicle_Collisions_Crashes.csv")
 
