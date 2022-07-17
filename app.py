@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 import pydeck as pdk
 import plotly.express as px
+import requests
+import io
 
 DATA_URL = "https://github.com/thehamzza/Streamlit-Web-App-Motor-Vehicle-Collisions-in-New-York-City/blob/main/Motor_Vehicle_Collisions_Crashes.csv"
 download = requests.get(DATA_URL).content
