@@ -3,21 +3,46 @@ import pandas as pd
 import numpy as np
 import pydeck as pdk
 import plotly.express as px
-import requests
-import io
+import pymongo
 
-DATA_URL = "https://github.com/thehamzza/Streamlit-Web-App-Motor-Vehicle-Collisions-in-New-York-City/blob/77f82403f9a58fc252a984cc8272730dcdc46af8/Motor_Vehicle_Collisions_Crashes.csv"
-download = requests.get(DATA_URL).content
-#df = pd.read_csv(io.StringIO(download.decode('utf-8')))
+# Initialize connection.
+# Uses st.experimental_singleton to only run once.
+@st.experimental_singleton(suppress_st_warning=True)
+def init_connection():
+    return pymongo.MongoClient(**st.secrets["mongo"])
+
+client = init_connection()
+
+# Pull data from the collection.
+# Uses st.experimental_memo to only rerun when the query changes or after 10 min.
+# @st.experimental_memo(ttl=600)
+# def get_data():
+#     db = client.mydb
+#     items = db.mycollection.find()
+#     items = list(items)  # make hashable for st.experimental_memo
+#     return items
+#
+# items = get_data()
+
+#DATA_URL = "G:/WORK/GRAY_SOLUTIONS_PROJECTS/Sreamlit_Project/Motor_Vehicle_Collisions_Crashes.csv"
+#DATA_URL = "https://github.com/thehamzza/Streamlit-Web-App-Motor-Vehicle-Collisions-in-New-York-City/blob/main/Motor_Vehicle_Collisions_Crashes.csv"
+DATA_URL = ("https://github.com/thehamzza/Streamlit-Web-App-Motor-Vehicle-Collisions-in-New-York-City/blob/77f82403f9a58fc252a984cc8272730dcdc46af8/Motor_Vehicle_Collisions_Crashes.csv")
 
 
 st.title("Motor Vehicle Collisions in New York City")
 st.markdown("This application is a Streamlit dashboard that can be used to analyze motor vehicle collisions in NYC 🗽🚕💥")
 
-@st.cache(persist=True)
+# Pull data from the collection.
+# Uses st.experimental_memo to only rerun when the query changes or after 10 min.
+@st.experimental_memo(ttl=600)
+#@st.cache(persist=True)
 def load_data(nrows):
-    data = pd.read_csv(io.StringIO(download.decode('utf-8')), nrows=nrows, parse_dates=[['CRASH_DATE', 'CRASH_TIME']])
+    db = client.mydb
+    items = db.mycollection.find()
+    items = list(items)  # make hashable for st.experimental_memo
+
     #data = pd.read_csv(DATA_URL, nrows=nrows, parse_dates=[['CRASH_DATE', 'CRASH_TIME']])
+    data = pd.DataFrame(items, nrows=nrows, parse_dates=[['CRASH_DATE', 'CRASH_TIME']])
     data.dropna(subset=['LATITUDE', 'LONGITUDE'], inplace=True)
     lowercase= lambda x: str(x).lower()
     data.rename(lowercase, axis='columns', inplace=True)
