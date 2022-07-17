@@ -3,6 +3,10 @@ import pandas as pd
 import numpy as np
 import pydeck as pdk
 import plotly.express as px
+from PIL import Image
+
+image = Image.open('nyc_accident_image.jpg')
+st.image(image, caption='Analysis of Accidents in NYC')
 
 
 
