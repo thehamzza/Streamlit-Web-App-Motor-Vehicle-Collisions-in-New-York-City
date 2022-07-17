@@ -71,7 +71,7 @@ data.dropna(subset=['LATITUDE', 'LONGITUDE'], inplace=True)
 lowercase= lambda x: str(x).lower()
 data.rename(lowercase, axis='columns', inplace=True)
 data.rename(columns={'crash_date_crash_time':'date/time'}, inplace=True)
-return data
+#return data
 
 st.header("Where are the most people injured in NYC")
 injured_people = st.slider("Number of persons injured in vehicle collision", 0, 19)
