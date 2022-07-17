@@ -9,7 +9,7 @@ import pymongo
 # Uses st.experimental_singleton to only run once.
 @st.experimental_singleton(suppress_st_warning=True)
 def init_connection():
-    return pymongo.MongoClient(**st.secrets["mongo"])
+    return pymongo.MongoClient(**st.secrets["mongo"], connect=False)
 
 client = init_connection()
 
